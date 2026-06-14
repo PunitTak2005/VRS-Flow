@@ -63,7 +63,7 @@ const seedMockData = async () => {
 
     const vol1 = await Volunteer.create({
       userId: volUser1._id,
-      phone: '555-0199',
+      phoneNumber: '555-0199',
       dob: new Date('1994-06-15'),
       gender: 'male',
       address: { street: '123 Pine St', city: 'Metropolis', state: 'NY', country: 'USA', pincode: '10001' },
@@ -95,7 +95,7 @@ const seedMockData = async () => {
 
     const vol2 = await Volunteer.create({
       userId: volUser2._id,
-      phone: '555-0144',
+      phoneNumber: '555-0144',
       dob: new Date('1998-12-05'),
       gender: 'female',
       address: { street: '456 Oak Ave', city: 'Metropolis', state: 'NY', country: 'USA', pincode: '10002' },
@@ -127,7 +127,7 @@ const seedMockData = async () => {
 
     const vol3 = await Volunteer.create({
       userId: volUser3._id,
-      phone: '555-0177',
+      phoneNumber: '555-0177',
       dob: new Date('1985-03-20'),
       gender: 'male',
       address: { street: '789 Maple Rd', city: 'Metropolis', state: 'NY', country: 'USA', pincode: '10003' },

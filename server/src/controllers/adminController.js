@@ -219,7 +219,7 @@ const updateVolunteerStatus = async (req, res, next) => {
  */
 const createVolunteer = async (req, res, next) => {
   try {
-    const { name, email, password, phone, dob, gender, city, state, country, pincode, preferredCategory } = req.body;
+    const { name, email, password, phone, phoneNumber, dob, gender, city, state, country, pincode, preferredCategory } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -239,7 +239,7 @@ const createVolunteer = async (req, res, next) => {
 
     const volunteer = await Volunteer.create({
       userId: user._id,
-      phone,
+      phoneNumber: phoneNumber || phone,
       dob: new Date(dob || '2000-01-01'),
       gender: gender || 'prefer-not-to-say',
       address: { city: city || 'Not specified', state: state || 'Not specified', country: country || 'Not specified', pincode: pincode || '000000' },
