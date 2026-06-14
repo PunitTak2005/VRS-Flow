@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: volunteer-system-api
+    env: node
+    rootDir: server
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: USE_MOCK_DB
+        value: "false"
+      - key: JWT_EXPIRE
+        value: 30d
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false

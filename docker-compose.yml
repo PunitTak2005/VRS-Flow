@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: vms-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - vms-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: vms-backend
+    restart: on-failure
+    depends_on:
+      - mongo
+    ports:
+      - "5004:5004"
+    env_file:
+      - ./server/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=5004
+      - USE_MOCK_DB=false
+      - MONGODB_URI=mongodb://mongo:27017/volunteer-system
+      - JWT_SECRET=volunteersystem_super_secret_dev_key_123!
+      - JWT_EXPIRE=30d
+      - CLIENT_URL=http://localhost:3005
+    networks:
+      - vms-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: vms-frontend
+    restart: on-failure
+    depends_on:
+      - server
+    ports:
+      - "3005:80"
+    environment:
+      - VITE_API_URL=http://localhost:5004
+    networks:
+      - vms-network
+
+networks:
+  vms-network:
+    name: vms-isolated-network
+    driver: bridge
+
+volumes:
+  mongo-data:
+    name: vms-mongo-volume
